@@ -13,8 +13,8 @@ from helper_func import *
 from database.database import *
 
 #Request force sub mode commad,,,,,,
-@client.on_message(filters.command('fsub_mode') & filters.private & admin)
-async def change_force_sub_mode(client: Client, message: Message):
+@Client.on_message(filters.command('fsub_mode') & filters.private & admin)
+async def change_force_sub_mode(Client: Client, message: Message):
     temp = await message.reply("<b><i>ᴡᴀɪᴛ ᴀ sᴇᴄ..</i></b>", quote=True)
     channels = await db.show_channels()
 
@@ -24,7 +24,7 @@ async def change_force_sub_mode(client: Client, message: Message):
     buttons = []
     for ch_id in channels:
         try:
-            chat = await client.get_chat(ch_id)
+            chat = await Client.get_chat(ch_id)
             mode = await db.get_channel_mode(ch_id)
             status = "🟢" if mode == "on" else "🔴"
             title = f"{status} {chat.title}"
@@ -41,8 +41,8 @@ async def change_force_sub_mode(client: Client, message: Message):
     )
 
 # This handler captures membership updates (like when a user leaves, banned)
-@client.on_chat_member_updated()
-async def handle_Chatmembers(client, chat_member_updated: ChatMemberUpdated):    
+@Client.on_chat_member_updated()
+async def handle_Chatmembers(Client, chat_member_updated: ChatMemberUpdated):    
     chat_id = chat_member_updated.chat.id
 
     if await db.reqChannel_exist(chat_id):
@@ -58,9 +58,9 @@ async def handle_Chatmembers(client, chat_member_updated: ChatMemberUpdated):
                 await db.del_req_user(chat_id, user_id)
 
 
-# This handler will capture any join request to the channel/group where the client is an admin
-@client.on_chat_join_request()
-async def handle_join_request(client, chat_join_request):
+# This handler will capture any join request to the channel/group where the Client is an admin
+@Client.on_chat_join_request()
+async def handle_join_request(Client, chat_join_request):
     chat_id = chat_join_request.chat.id
     user_id = chat_join_request.from_user.id
 
@@ -88,8 +88,8 @@ async def handle_join_request(client, chat_join_request):
 #
 
 # Add channel
-@client.on_message(filters.command('addchnl') & filters.private & admin)
-async def add_force_sub(client: Client, message: Message):
+@Client.on_message(filters.command('addchnl') & filters.private & admin)
+async def add_force_sub(Client: Client, message: Message):
     temp = await message.reply("<b><i>ᴡᴀɪᴛ ᴀ sᴇᴄ..</i></b>", quote=True)
     args = message.text.split(maxsplit=1)
 
@@ -110,12 +110,12 @@ async def add_force_sub(client: Client, message: Message):
         return await temp.edit(f"<b>Channel already exists:</b> <code>{channel_id}</code>")
 
     try:
-        chat = await client.get_chat(channel_id)
+        chat = await Client.get_chat(channel_id)
 
         if chat.type != ChatType.CHANNEL:
             return await temp.edit("<b>❌ Only public or private channels are allowed.</b>")
 
-        member = await client.get_chat_member(chat.id, "me")
+        member = await Client.get_chat_member(chat.id, "me")
         print(f"Bot status: {member.status} in chat: {chat.title} ({chat.id})")  # Debug
 
         # FIXED ENUM COMPARISON
@@ -124,7 +124,7 @@ async def add_force_sub(client: Client, message: Message):
 
         # Get invite link
         try:
-            link = await client.export_chat_invite_link(chat.id)
+            link = await Client.export_chat_invite_link(chat.id)
         except Exception:
             link = f"https://t.me/{chat.username}" if chat.username else f"https://t.me/c/{str(chat.id)[4:]}"
 
@@ -155,8 +155,8 @@ async def add_force_sub(client: Client, message: Message):
 #
 
 # Delete channel
-@client.on_message(filters.command('delchnl') & filters.private & admin)
-async def del_force_sub(client: Client, message: Message):
+@Client.on_message(filters.command('delchnl') & filters.private & admin)
+async def del_force_sub(Client: Client, message: Message):
     temp = await message.reply("<b><i>ᴡᴀɪᴛ ᴀ sᴇᴄ..</i></b>", quote=True)
     args = message.text.split(maxsplit=1)
     all_channels = await db.show_channels()
@@ -183,8 +183,8 @@ async def del_force_sub(client: Client, message: Message):
         return await temp.edit(f"<b>❌ Channel not found in force-sub list:</b> <code>{ch_id}</code>")
 
 # View all channels
-@client.on_message(filters.command('listchnl') & filters.private & admin)
-async def list_force_sub_channels(client: Client, message: Message):
+@Client.on_message(filters.command('listchnl') & filters.private & admin)
+async def list_force_sub_channels(Client: Client, message: Message):
     temp = await message.reply("<b><i>ᴡᴀɪᴛ ᴀ sᴇᴄ..</i></b>", quote=True)
     channels = await db.show_channels()
 
@@ -194,8 +194,8 @@ async def list_force_sub_channels(client: Client, message: Message):
     result = "<b>⚡ Force-sub Channels:</b>\n\n"
     for ch_id in channels:
         try:
-            chat = await client.get_chat(ch_id)
-            link = chat.invite_link or await client.export_chat_invite_link(chat.id)
+            chat = await Client.get_chat(ch_id)
+            link = chat.invite_link or await Client.export_chat_invite_link(chat.id)
             result += f"<b>•</b> <a href='{link}'>{chat.title}</a> [<code>{ch_id}</code>]\n"
         except Exception:
             result += f"<b>•</b> <code>{ch_id}</code> — <i>Unavailable</i>\n"
