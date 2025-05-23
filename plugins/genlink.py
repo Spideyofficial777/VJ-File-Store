@@ -1,5 +1,5 @@
 # Don't Remove Credit @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot @Tech_VJ
+# Subscribe YouTube Channel For Amazing Bot @Spidey
 # Ask Doubt on telegram @KingVJ01
 
 import re
@@ -13,7 +13,7 @@ import json
 import base64
 
 # Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
+# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Spidey
 # Ask Doubt on telegram @KingVJ01
 
 async def allowed(_, __, message):
@@ -24,7 +24,7 @@ async def allowed(_, __, message):
     return False
 
 # Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
+# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Spidey
 # Ask Doubt on telegram @KingVJ01
 
 @Client.on_message((filters.document | filters.video | filters.audio) & filters.private & filters.create(allowed))
@@ -39,7 +39,7 @@ async def incoming_gen_link(bot, message):
     user_id = message.from_user.id
     user = await get_user(user_id)
     if WEBSITE_URL_MODE == True:
-        share_link = f"{WEBSITE_URL}?Tech_VJ={outstr}"
+        share_link = f"{WEBSITE_URL}?Spidey={outstr}"
     else:
         share_link = f"https://t.me/{username}?start={outstr}"
     if user["base_site"] and user["shortener_api"] != None:
@@ -56,7 +56,7 @@ async def gen_link_s(bot, message):
     if not replied:
         return await message.reply('Reply to a message to get a shareable link.')
 # Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
+# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Spidey
 # Ask Doubt on telegram @KingVJ01
     
     post = await replied.copy(LOG_CHANNEL)
@@ -67,7 +67,7 @@ async def gen_link_s(bot, message):
     user_id = message.from_user.id
     user = await get_user(user_id)
     if WEBSITE_URL_MODE == True:
-        share_link = f"{WEBSITE_URL}?Tech_VJ={outstr}"
+        share_link = f"{WEBSITE_URL}?Spidey={outstr}"
     else:
         share_link = f"https://t.me/{username}?start={outstr}"
     if user["base_site"] and user["shortener_api"] != None:
@@ -78,7 +78,7 @@ async def gen_link_s(bot, message):
         
 
 # Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
+# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Spidey
 # Ask Doubt on telegram @KingVJ01
 
 @Client.on_message(filters.command(['batch']) & filters.create(allowed))
@@ -100,7 +100,7 @@ async def gen_link_batch(bot, message):
         f_chat_id = int(("-100" + f_chat_id))
 
 # Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
+# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Spidey
 # Ask Doubt on telegram @KingVJ01
     
     match = regex.match(last)
@@ -123,7 +123,7 @@ async def gen_link_batch(bot, message):
         return await message.reply(f'Errors - {e}')
 
 # Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
+# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Spidey
 # Ask Doubt on telegram @KingVJ01
     
     sts = await message.reply("**ɢᴇɴᴇʀᴀᴛɪɴɢ ʟɪɴᴋ ғᴏʀ ʏᴏᴜʀ ᴍᴇssᴀɢᴇ**.\n**ᴛʜɪs ᴍᴀʏ ᴛᴀᴋᴇ ᴛɪᴍᴇ ᴅᴇᴘᴇɴᴅɪɴɢ ᴜᴘᴏɴ ɴᴜᴍʙᴇʀ ᴏғ ᴍᴇssᴀɢᴇs**")
@@ -133,7 +133,7 @@ async def gen_link_batch(bot, message):
     outlist = []
 
 # Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
+# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Spidey
 # Ask Doubt on telegram @KingVJ01
 
     # file store without db channel
@@ -156,7 +156,7 @@ async def gen_link_batch(bot, message):
         outlist.append(file)
 
 # Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
+# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Spidey
 # Ask Doubt on telegram @KingVJ01
 
     with open(f"batchmode_{message.from_user.id}.json", "w+") as out:
@@ -168,7 +168,7 @@ async def gen_link_batch(bot, message):
     user_id = message.from_user.id
     user = await get_user(user_id)
     if WEBSITE_URL_MODE == True:
-        share_link = f"{WEBSITE_URL}?Tech_VJ=BATCH-{file_id}"
+        share_link = f"{WEBSITE_URL}?Spidey=BATCH-{file_id}"
     else:
         share_link = f"https://t.me/{username}?start=BATCH-{file_id}"
     if user["base_site"] and user["shortener_api"] != None:
@@ -178,6 +178,6 @@ async def gen_link_batch(bot, message):
         await sts.edit(f"<b>⭕ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\nContains `{og_msg}` files.\n\n🔗 ᴏʀɪɢɪɴᴀʟ ʟɪɴᴋ :- {share_link}</b>")
         
 # Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
+# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Spidey
 # Ask Doubt on telegram @KingVJ01
 
