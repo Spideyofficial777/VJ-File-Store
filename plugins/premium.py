@@ -2,9 +2,9 @@ from datetime import timedelta
 import pytz
 import datetime, time
 from Script import script 
-from info import ADMINS, LOG_CHANNEL
+from config import ADMINS, LOG_CHANNEL
 from utils import get_seconds
-from database.users_chats_db import db 
+from database.db_users import db 
 from pyrogram import Client, filters 
 from pyrogram.errors.exceptions.bad_request_400 import MessageTooLong
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
