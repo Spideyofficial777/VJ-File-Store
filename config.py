@@ -18,13 +18,15 @@ API_HASH = environ.get("API_HASH", "d47c74c8a596fd3048955b322304109d")
 BOT_TOKEN = environ.get("BOT_TOKEN", "")
 
 PICS = (environ.get('PICS', 'https://graph.org/file/2518d4eb8c88f8f669f4c.jpg https://graph.org/file/d6d9d9b8d2dc779c49572.jpg https://graph.org/file/4b04eaad1e75e13e6dc08.jpg https://graph.org/file/05066f124a4ac500f8d91.jpg https://graph.org/file/2c64ed483c8fcf2bab7dd.jpg')).split() # Bot Start Picture
+FORCESUB_IMG = os.environ.get("FORCESUB_IMG", "https://telegra.ph/file/e292b12890b8b4b9dcbd1.jpg")
+BAN_SUPPORT = os.environ.get("BAN_SUPPORT", "https://t.me/Spideyofficial_777")
 ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '5518489725 7965267063').split()]
 BOT_USERNAME = environ.get("BOT_USERNAME", "") # without @
 PORT = environ.get("PORT", "8080")
 
 # Clone Info :-
 CLONE_MODE = bool(environ.get('CLONE_MODE', False)) # Set True or False
-
+ 
 # If Clone Mode Is True Then Fill All Required Variable, If False Then Don't Fill.
 CLONE_DB_URI = environ.get("CLONE_DB_URI", "")
 CDB_NAME = environ.get("CDB_NAME", "cloneSpidey")
@@ -39,7 +41,10 @@ AUTO_DELETE_MODE = bool(environ.get('AUTO_DELETE_MODE', True)) # Set True or Fal
 # If Auto Delete Mode Is True Then Fill All Required Variable, If False Then Don't Fill.
 AUTO_DELETE = int(environ.get("AUTO_DELETE", "15")) # Time in Minutes
 AUTO_DELETE_TIME = int(environ.get("AUTO_DELETE_TIME", "1800")) # Time in Seconds
-
+VERIFY_EXPIRE = int(os.environ.get('VERIFY_EXPIRE', 7200))
+FSUB_LINK_EXPIRY = int(os.getenv("FSUB_LINK_EXPIRY", "10"))  # 0 means no expiry
+#for the forceSub channel id's
+MULTI_FSUB = [int(channel_id) for channel_id in environ.get('MULTI_FSUB', '-1001959922658 -1002433552221 -1002470391435').split() if re.match(r'^-?\d+$', channel_id)] 
 # Channel Information
 LOG_CHANNEL = int(environ.get("LOG_CHANNEL", "-1002294764885"))
 
