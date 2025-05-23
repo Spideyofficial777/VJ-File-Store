@@ -8,6 +8,13 @@ logger.setLevel(logging.INFO)
 TOKENS = {}
 VERIFIED = {}
 
+class temp(object):
+    ME = None    
+    U_NAME = None
+    B_NAME = None
+    B_LINK = None
+    MELCOW = {}
+        
 async def get_verify_shorted_link(link):
     if SHORTLINK_URL == "api.shareus.io":
         url = f'https://{SHORTLINK_URL}/easy_api'

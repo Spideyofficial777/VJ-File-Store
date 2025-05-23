@@ -1,5 +1,5 @@
-# Don't Remove Credit @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot @Tech_VJ
+# Don't Remove Credit @SPIDEYOFFICIAL777
+# Subscribe YouTube Channel For Amazing Bot @Spidey_official_777
 # Ask Doubt on telegram @KingVJ01
 
 FROM python:3.10.8-slim-buster
