@@ -1,6 +1,6 @@
 import logging, asyncio, os, re, random, pytz, aiohttp, requests, string, json, http.client
 from datetime import date, datetime
-from config import SHORTLINK_API, SHORTLINK_URL
+from config import * # SHORTLINK_API, SHORTLINK_URL
 from shortzy import Shortzy
 
 logger = logging.getLogger(__name__)
@@ -61,26 +61,46 @@ async def get_token(bot, userid, link):
     return str(shortened_verify_url)
 
 async def verify_user(bot, userid, token):
-    user = await bot.get_users(userid)
+    user = await bot.get_users(int(userid))
+    if not await db.is_user_exist(user.id):
+        await db.add_user(user.id, user.first_name)
+        await bot.send_message(LOG_CHANNEL, script.LOG_TEXT.format(user.id, user.mention))
     TOKENS[user.id] = {token: True}
     tz = pytz.timezone('Asia/Kolkata')
-    today = date.today()
-    VERIFIED[user.id] = str(today)
+    date_var = datetime.now(tz)+timedelta(hours=VERIFY_EXPIRE)
+    temp_time = date_var.strftime("%H:%M:%S")
+    date_var, time_var = str(date_var).split(" ")
+    await update_verify_status(user.id, date_var, temp_time)
 
 async def check_verification(bot, userid):
-    user = await bot.get_users(userid)
+    user = await bot.get_users(int(userid))
+    if not await db.is_user_exist(user.id):
+        await db.add_user(user.id, user.first_name)
+        await bot.send_message(LOG_CHANNEL, script.LOG_TEXT.format(user.id, user.mention))
+    
     tz = pytz.timezone('Asia/Kolkata')
     today = date.today()
-    if user.id in VERIFIED.keys():
-        EXP = VERIFIED[user.id]
-        years, month, day = EXP.split('-')
-        comp = date(int(years), int(month), int(day))
-        if comp<today:
-            return False
+    now = datetime.now(tz)
+    curr_time = now.strftime("%H:%M:%S")
+    hour1, minute1, second1 = curr_time.split(":")
+    curr_time = time(int(hour1), int(minute1), int(second1))
+    status = await get_verify_status(user.id)
+    date_var = status["date"]
+    time_var = status["time"]
+    years, month, day = date_var.split('-')
+    comp_date = date(int(years), int(month), int(day))
+    hour, minute, second = time_var.split(":")
+    comp_time = time(int(hour), int(minute), int(second))
+    if comp_date<today:
+        return False
+    else:
+        if comp_date == today:
+            if comp_time<curr_time:
+                return False
+            else:
+                return True
         else:
             return True
-    else:
-        return False
 
 async def get_seconds(time_string):
     def extract_value_and_unit(ts):
@@ -118,4 +138,33 @@ def get_readable_time(seconds):
             period_value, seconds = divmod(seconds, period_seconds)
             result += f'{int(period_value)}{period_name}'
     return result
-  
+
+async def is_req_subscribed(bot, query):
+    if await db.find_join_req(query.from_user.id):
+        return True
+    try:
+        user = await bot.get_chat_member(AUTH_CHANNEL, query.from_user.id)
+    except UserNotParticipant:
+        pass
+    except Exception as e:
+        logger.exception(e)
+    else:
+        if user.status != enums.ChatMemberStatus.BANNED:
+            return True
+
+    return False
+
+async def is_subscribed(bot, query, channels):
+    btn = []
+    for channel_id in channels:
+        try:
+            chat = await bot.get_chat(int(channel_id))
+            await bot.get_chat_member(channel_id, query.from_user.id)
+        except UserNotParticipant:
+            btn.append(
+                [InlineKeyboardButton(f'❤️ {chat.title}', url=chat.invite_link)]
+            )
+        except Exception as e:
+            pass
+    return btn
+      

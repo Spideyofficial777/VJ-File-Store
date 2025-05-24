@@ -47,6 +47,12 @@ FSUB_LINK_EXPIRY = int(os.getenv("FSUB_LINK_EXPIRY", "10"))  # 0 means no expiry
 MULTI_FSUB = [int(channel_id) for channel_id in environ.get('MULTI_FSUB', '-1001959922658 -1002433552221 -1002470391435').split() if re.match(r'^-?\d+$', channel_id)] 
 # Channel Information
 LOG_CHANNEL = int(environ.get("LOG_CHANNEL", "-1002294764885"))
+VERIFIED_LOG = int(environ.get('VERIFIED_LOG', '-1002423451263')) 
+VERIFY = bool(environ.get('VERIFY', True))  # Verification On (True) / Off (False)
+VERIFY_EXPIRE = int(environ.get('VERIFY_EXPIRE', 5))  # Add time in hours
+HOW_TO_VERIFY = environ.get('HOW_TO_VERIFY', 'https://t.me/spideyofficial_777/12')  # How to open tutorial link for verification
+AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
+auth_channel = environ.get('AUTH_CHANNEL', '-1001959922658')
 
 # File Caption Information
 CUSTOM_FILE_CAPTION = environ.get("CUSTOM_FILE_CAPTION", f"{script.CAPTION}")
