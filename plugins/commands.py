@@ -125,23 +125,41 @@ async def start(client, message):
         pre = ""
     if data.split("-", 1)[0] == "verify":
         userid = data.split("-", 2)[1]
-        token = data.split("-", 3)[2]
+        token = data.split("-", 3)[2] 
+        fileid = data.split("-", 3)[3]
         if str(message.from_user.id) != str(userid):
             return await message.reply_text(
                 text="<b>Invalid link or Expired link !</b>",
-                protect_content=True
+                protect_content=False
             )
         is_valid = await check_token(client, userid, token)
         if is_valid == True:
-            await message.reply_text(
-                text=f"<b>Hey {message.from_user.mention}, You are successfully verified !\nNow you have unlimited access for all files till today midnight.</b>",
-                protect_content=True
+            btn = [[
+                InlineKeyboardButton("ᴄʟɪᴄᴋ ʜᴇʀᴇ ᴛᴏ ɢᴇᴛ ғɪʟᴇ", url=f"https://telegram.me/{temp.U_NAME}?start=files_{fileid}")
+            ]]
+            await message.reply_photo(
+                photo="https://graph.org/file/6928de1539e2e80e47fb8.jpg",
+                caption=f"<blockquote><b>👋 ʜᴇʏ {message.from_user.mention}, ʏᴏᴜ'ʀᴇ ᴀʀᴇ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴠᴇʀɪꜰɪᴇᴅ ✅\n\nɴᴏᴡ ʏᴏᴜ'ᴠᴇ ᴜɴʟɪᴍɪᴛᴇᴅ ᴀᴄᴄᴇꜱꜱ ғᴏʀ {VERIFY_EXPIRE} ʜᴏᴜʀs🎉</blockquote></b>",
+                reply_markup=InlineKeyboardMarkup(btn)
             )
-            await verify_user(client, userid, token)
+            await verify_user(client, userid, token) 
+            await vr_db.save_verification(message.from_user.id) 
+            now = datetime.now()
+            current_time = now.strftime("%H:%M:%S")
+            current_date = now.strftime("%Y-%m-%d")
+            
+            Spidey_message = (
+                f"Name: {message.from_user.mention}\n"
+                f"Time: {current_time}\n"
+                f"Date: {current_date}\n"
+                f"#verify_completed"
+            )
+            await client.send_message(chat_id=VERIFIED_LOG, text=Spidey_message)
+
         else:
             return await message.reply_text(
-                text="<b>Invalid link or Expired link !</b>",
-                protect_content=True
+                text="<b>opps! Invalid link or Expired link !</b>",
+                protect_content=False
             )
     elif data.split("-", 1)[0] == "BATCH":
         try:
