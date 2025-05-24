@@ -51,8 +51,8 @@ VERIFIED_LOG = int(environ.get('VERIFIED_LOG', '-1002423451263'))
 VERIFY = bool(environ.get('VERIFY', True))  # Verification On (True) / Off (False)
 VERIFY_EXPIRE = int(environ.get('VERIFY_EXPIRE', 5))  # Add time in hours
 HOW_TO_VERIFY = environ.get('HOW_TO_VERIFY', 'https://t.me/spideyofficial_777/12')  # How to open tutorial link for verification
-AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
 auth_channel = environ.get('AUTH_CHANNEL', '-1001959922658')
+AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
 
 # File Caption Information
 CUSTOM_FILE_CAPTION = environ.get("CUSTOM_FILE_CAPTION", f"{script.CAPTION}")
